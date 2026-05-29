@@ -17,3 +17,5 @@ Archivos incluidos:
 - `netlify.toml`: configuracion para evitar builds de Vite/Bun.
 
 No mezclar esta carpeta con TalentOps.
+
+Prueba de sincronizacion: 2026-05-28.
