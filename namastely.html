@@ -1,0 +1,1889 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Namastely</title>
+    <style>
+      :root {
+        --primary: #9b2fcb;
+        --primary-2: #d45df2;
+        --secondary: #4b0082;
+        --deep: #26004b;
+        --ink: #171022;
+        --muted: #716a82;
+        --soft: #fbf5ff;
+        --soft-2: #f1e3fb;
+        --card: #ffffff;
+        --line: #eadff1;
+        --success: #dff5eb;
+        --success-text: #466457;
+        --danger: #ff4d61;
+        --danger-soft: #fff0f2;
+        --shadow: 0 24px 70px rgba(75, 0, 130, 0.12);
+        --font-display: Georgia, "Times New Roman", serif;
+        --font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(180deg, rgba(250, 240, 255, 0.9), rgba(255, 255, 255, 0.96) 52%),
+          radial-gradient(circle at 62% 8%, rgba(155, 47, 203, 0.14), transparent 34%);
+        color: var(--ink);
+        font-family: var(--font-body);
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        letter-spacing: 0;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--font-display);
+        font-size: 30px;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        position: relative;
+        display: grid;
+        width: 45px;
+        height: 45px;
+        place-items: center;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        box-shadow: 0 0 0 8px rgba(155, 47, 203, 0.13);
+      }
+
+      .brand-mark::after {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: white;
+        content: "";
+      }
+
+      .login-screen {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 32px;
+        background:
+          radial-gradient(circle at 50% 20%, rgba(155, 47, 203, 0.2), transparent 28%),
+          linear-gradient(160deg, #fff, #fbf0ff 45%, #fff);
+      }
+
+      .login-card {
+        width: min(650px, 100%);
+        padding: clamp(28px, 5vw, 54px);
+      }
+
+      .login-card .brand {
+        justify-content: center;
+        margin-bottom: 62px;
+      }
+
+      .login-card h1 {
+        font-size: clamp(48px, 8vw, 66px);
+        line-height: 0.98;
+      }
+
+      .login-card p {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 24px;
+      }
+
+      .form {
+        display: grid;
+        gap: 22px;
+        margin-top: 52px;
+      }
+
+      .field {
+        display: grid;
+        gap: 10px;
+      }
+
+      .field-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      label {
+        color: var(--ink);
+        font-size: 22px;
+        font-weight: 760;
+      }
+
+      .field a {
+        color: var(--primary);
+        font-size: 18px;
+        text-decoration: none;
+      }
+
+      input,
+      select {
+        width: 100%;
+        min-height: 66px;
+        border: 1px solid rgba(75, 0, 130, 0.11);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--ink);
+        padding: 0 24px;
+        font-size: 20px;
+        outline: none;
+        box-shadow:
+          inset 0 1px 1px rgba(255, 255, 255, 0.7),
+          0 6px 20px rgba(75, 0, 130, 0.1);
+      }
+
+      input:focus,
+      select:focus {
+        border-color: rgba(155, 47, 203, 0.52);
+        box-shadow: 0 0 0 5px rgba(155, 47, 203, 0.12);
+      }
+
+      .check-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 20px;
+      }
+
+      .check-row input {
+        width: 22px;
+        height: 22px;
+        min-height: 0;
+        accent-color: var(--primary);
+        box-shadow: none;
+      }
+
+      .btn {
+        display: inline-flex;
+        min-height: 58px;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        border: 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-2));
+        color: white;
+        padding: 0 28px;
+        font-size: 19px;
+        font-weight: 800;
+        box-shadow: 0 18px 44px rgba(155, 47, 203, 0.27);
+        transition:
+          transform 160ms ease,
+          opacity 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 22px 54px rgba(155, 47, 203, 0.32);
+      }
+
+      .btn.secondary {
+        background: #d9c3e8;
+        color: var(--ink);
+        box-shadow: none;
+      }
+
+      .btn.soft {
+        background: #f2dafc;
+        color: var(--secondary);
+        box-shadow: none;
+      }
+
+      .btn.ghost {
+        background: transparent;
+        color: var(--danger);
+        box-shadow: none;
+      }
+
+      .login-note {
+        margin-top: 26px;
+        color: var(--muted);
+        font-size: 18px;
+        text-align: center;
+      }
+
+      .login-note button {
+        border: 0;
+        background: transparent;
+        color: var(--primary);
+        font-size: inherit;
+      }
+
+      .app {
+        display: grid;
+        min-height: 100vh;
+        grid-template-columns: 322px 1fr;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        display: flex;
+        height: 100vh;
+        flex-direction: column;
+        background: linear-gradient(180deg, var(--secondary), var(--deep));
+        color: white;
+        padding: 34px 24px;
+      }
+
+      .sidebar .brand {
+        color: white;
+      }
+
+      .nav {
+        display: grid;
+        gap: 16px;
+        margin-top: 64px;
+      }
+
+      .nav-btn {
+        display: flex;
+        min-height: 58px;
+        align-items: center;
+        gap: 16px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.68);
+        padding: 0 22px;
+        font-size: 20px;
+        font-weight: 700;
+        text-align: left;
+      }
+
+      .nav-btn.active {
+        background: rgba(255, 255, 255, 0.16);
+        color: white;
+        box-shadow:
+          inset 0 0 0 2px rgba(105, 222, 255, 0.78),
+          0 16px 38px rgba(0, 0, 0, 0.16);
+      }
+
+      .nav-icon {
+        display: inline-grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        font-size: 25px;
+        line-height: 1;
+        text-align: center;
+      }
+
+      .nav-label {
+        line-height: 1;
+      }
+
+      .sidebar-plan {
+        margin-top: auto;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.09);
+        padding: 22px;
+      }
+
+      .sidebar-plan small {
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 16px;
+      }
+
+      .sidebar-plan strong {
+        display: block;
+        margin-top: 6px;
+        font-size: 20px;
+      }
+
+      .progress-track {
+        overflow: hidden;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.18);
+      }
+
+      .progress-fill {
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      }
+
+      .logout {
+        margin-top: 20px;
+        border: 0;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 16px;
+        text-align: left;
+      }
+
+      .main {
+        min-width: 0;
+        background: linear-gradient(180deg, #fbf3ff 0, #fff 58%);
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 4;
+        display: flex;
+        min-height: 80px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border-bottom: 1px solid rgba(75, 0, 130, 0.06);
+        background: rgba(255, 251, 255, 0.88);
+        padding: 0 clamp(22px, 4vw, 42px);
+        backdrop-filter: blur(20px);
+      }
+
+      .topbar .brand {
+        display: none;
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .hello {
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.15;
+      }
+
+      .hello strong {
+        display: block;
+        color: var(--ink);
+        font-family: var(--font-display);
+        font-size: 26px;
+      }
+
+      .content {
+        width: min(1480px, calc(100% - 64px));
+        margin: 0 auto;
+        padding: 48px 0 84px;
+      }
+
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+        animation: enter 240ms ease both;
+      }
+
+      @keyframes enter {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .eyebrow {
+        color: var(--primary);
+        font-size: 16px;
+        font-weight: 900;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+      }
+
+      .page-title {
+        margin-top: 10px;
+        font-size: clamp(46px, 5vw, 62px);
+        line-height: 1;
+      }
+
+      .subtitle {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 22px;
+      }
+
+      .hero {
+        overflow: hidden;
+        border-radius: 34px;
+        background:
+          radial-gradient(circle at 78% 68%, rgba(155, 47, 203, 0.32), transparent 28%),
+          linear-gradient(115deg, var(--secondary), #220044);
+        color: white;
+        padding: clamp(34px, 5vw, 56px);
+        box-shadow: 0 30px 90px rgba(75, 0, 130, 0.18);
+      }
+
+      .hero .eyebrow {
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      .hero h1 {
+        margin-top: 14px;
+        font-size: clamp(48px, 6vw, 72px);
+        line-height: 1.04;
+      }
+
+      .hero p {
+        margin-top: 18px;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 23px;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin-top: 42px;
+      }
+
+      .card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 30px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+      }
+
+      .metric-card {
+        padding: 28px;
+      }
+
+      .metric-card .top {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: var(--muted);
+        font-size: 16px;
+        font-weight: 760;
+      }
+
+      .bubble {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border-radius: 50%;
+        background: #f5dcff;
+        color: var(--primary);
+      }
+
+      .metric-value {
+        margin-top: 24px;
+        font-family: var(--font-display);
+        font-size: 48px;
+      }
+
+      .metric-note {
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin: 42px 0 24px;
+      }
+
+      .section-head h2 {
+        margin-top: 8px;
+        font-size: clamp(38px, 4vw, 48px);
+      }
+
+      .inline-link {
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .reservation-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 26px;
+      }
+
+      .reservation-card,
+      .class-card,
+      .plan-card {
+        padding: 32px;
+      }
+
+      .corner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 124px;
+        height: 124px;
+        border-bottom-left-radius: 120px;
+        background: rgba(155, 47, 203, 0.09);
+      }
+
+      .badge {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        min-height: 32px;
+        align-items: center;
+        border-radius: 999px;
+        background: var(--success);
+        color: var(--success-text);
+        padding: 0 14px;
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .badge.purple {
+        background: #f0d0fb;
+        color: var(--primary);
+      }
+
+      .class-type {
+        color: var(--primary);
+        font-size: 15px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .card h3 {
+        margin-top: 14px;
+        font-size: 32px;
+      }
+
+      .meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 28px;
+        color: var(--muted);
+        font-size: 19px;
+      }
+
+      .card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 28px;
+      }
+
+      .danger-link {
+        border: 0;
+        background: transparent;
+        color: var(--danger);
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .date-strip {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        margin: 36px 0 34px;
+        padding-bottom: 6px;
+      }
+
+      .date-pill {
+        min-width: 88px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: white;
+        color: var(--muted);
+        padding: 16px 12px;
+        text-align: center;
+        box-shadow: 0 16px 40px rgba(75, 0, 130, 0.06);
+      }
+
+      .date-pill.active {
+        border-color: transparent;
+        background: linear-gradient(180deg, var(--primary), var(--primary-2));
+        color: white;
+      }
+
+      .date-pill span {
+        display: block;
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+      }
+
+      .date-pill strong {
+        display: block;
+        margin-top: 4px;
+        font-family: var(--font-display);
+        font-size: 32px;
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 18px 28px;
+        margin-bottom: 34px;
+        border: 1px solid var(--line);
+        border-radius: 32px;
+        background: white;
+        padding: 22px 36px;
+        box-shadow: var(--shadow);
+      }
+
+      .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .filter-group label {
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .filter-group select {
+        min-height: 38px;
+        min-width: 150px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-2));
+        color: white;
+        padding: 0 18px;
+        font-size: 16px;
+        font-weight: 800;
+        box-shadow: none;
+      }
+
+      .classes-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .class-card p {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 19px;
+        line-height: 1.45;
+      }
+
+      .mini-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .mini {
+        min-height: 36px;
+        border-radius: 999px;
+        background: #f8f3fb;
+        color: var(--muted);
+        padding: 8px 10px;
+        font-size: 15px;
+        text-align: center;
+      }
+
+      .occupancy {
+        margin-top: 22px;
+      }
+
+      .occupancy .progress-track {
+        background: #f1ecf3;
+      }
+
+      .plan-hero {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        margin-top: 48px;
+        border-radius: 34px;
+        background: linear-gradient(115deg, var(--secondary), #220044);
+        color: white;
+        padding: 42px;
+        box-shadow: 0 30px 90px rgba(75, 0, 130, 0.18);
+      }
+
+      .plan-hero h2 {
+        margin-top: 16px;
+        font-size: 52px;
+      }
+
+      .plan-remaining {
+        font-family: var(--font-display);
+        font-size: 76px;
+        line-height: 0.9;
+        text-align: right;
+      }
+
+      .plan-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        margin-top: 28px;
+      }
+
+      .plan-card.featured {
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        color: white;
+      }
+
+      .plan-card ul {
+        display: grid;
+        gap: 14px;
+        margin: 28px 0;
+        padding: 0;
+        list-style: none;
+        color: inherit;
+        font-size: 18px;
+      }
+
+      .history-card {
+        width: min(1180px, 100%);
+        margin: 34px auto 0;
+        padding: 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid rgba(75, 0, 130, 0.07);
+        padding: 20px 26px;
+        text-align: left;
+        font-size: 18px;
+      }
+
+      th {
+        background: #faf6fc;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 900;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .status {
+        display: inline-flex;
+        min-height: 26px;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0 12px;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .status.ok {
+        background: var(--success);
+        color: var(--success-text);
+      }
+
+      .status.bad {
+        background: #ffe0e4;
+        color: var(--danger);
+      }
+
+      .empty {
+        padding: 34px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .modal-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        display: none;
+        place-items: center;
+        background: rgba(0, 0, 0, 0.76);
+        padding: 20px;
+      }
+
+      .modal-layer.show {
+        display: grid;
+      }
+
+      .modal {
+        width: min(570px, 100%);
+        border-radius: 20px;
+        background: white;
+        padding: 32px;
+        text-align: center;
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.25);
+      }
+
+      .modal-icon {
+        display: grid;
+        width: 62px;
+        height: 62px;
+        place-items: center;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: var(--danger-soft);
+        color: var(--danger);
+        font-size: 30px;
+      }
+
+      .modal h3 {
+        font-size: 30px;
+      }
+
+      .modal p {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.45;
+      }
+
+      .modal-class {
+        margin-top: 22px;
+        border-radius: 22px;
+        background: #faf6fc;
+        padding: 22px;
+        text-align: left;
+      }
+
+      .modal-actions {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 22px;
+      }
+
+      .toast {
+        position: fixed;
+        top: 38px;
+        left: 50%;
+        z-index: 30;
+        display: none;
+        width: min(650px, calc(100% - 28px));
+        transform: translateX(-50%);
+        border: 1px solid #bcebcf;
+        border-radius: 14px;
+        background: #ecfff3;
+        color: #00862e;
+        padding: 28px 72px 28px 58px;
+        box-shadow: 0 18px 52px rgba(0, 134, 46, 0.12);
+      }
+
+      .toast.error {
+        border-color: #ffd4da;
+        background: #fff0f2;
+        color: red;
+      }
+
+      .toast.show {
+        display: block;
+        animation: enter 180ms ease both;
+      }
+
+      .toast strong {
+        display: block;
+        font-size: 22px;
+      }
+
+      .toast p {
+        margin-top: 8px;
+        font-size: 18px;
+      }
+
+      .mobile-nav {
+        display: none;
+      }
+
+      .role-placeholder {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 28px;
+        background: linear-gradient(160deg, #fff, #fbf0ff);
+      }
+
+      .role-placeholder .card {
+        width: min(620px, 100%);
+        padding: 34px;
+        text-align: center;
+      }
+
+      .role-placeholder h1 {
+        font-size: 44px;
+      }
+
+      @media (min-width: 901px) and (max-width: 1320px) {
+        .app {
+          grid-template-columns: 282px 1fr;
+        }
+
+        .sidebar {
+          padding: 28px 18px;
+        }
+
+        .sidebar .brand {
+          font-size: 26px;
+        }
+
+        .nav-btn {
+          min-height: 54px;
+          font-size: 18px;
+          padding: 0 18px;
+        }
+
+        .content {
+          width: min(100% - 48px, 1180px);
+        }
+
+        .classes-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 900px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        .topbar {
+          position: sticky;
+          min-height: 98px;
+        }
+
+        .topbar .brand {
+          display: flex;
+        }
+
+        .hello {
+          display: none;
+        }
+
+        .content {
+          width: min(100% - 32px, 720px);
+          padding: 42px 0 118px;
+        }
+
+        .metrics,
+        .reservation-grid,
+        .classes-grid,
+        .plan-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .mobile-nav {
+          position: fixed;
+          right: 14px;
+          bottom: 14px;
+          left: 14px;
+          z-index: 10;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.92);
+          padding: 10px;
+          box-shadow: 0 18px 48px rgba(75, 0, 130, 0.16);
+          backdrop-filter: blur(18px);
+        }
+
+        .mobile-nav .nav-btn {
+          min-height: 76px;
+          flex-direction: column;
+          justify-content: center;
+          gap: 8px;
+          border-radius: 999px;
+          color: var(--muted);
+          padding: 0;
+          font-size: 18px;
+        }
+
+        .mobile-nav .nav-btn.active {
+          background: linear-gradient(135deg, var(--primary), var(--primary-2));
+          color: white;
+          box-shadow: inset 0 0 0 3px #007bd6;
+        }
+
+        .mobile-nav .nav-icon {
+          width: 30px;
+          height: 30px;
+          font-size: 28px;
+        }
+
+        .mobile-nav .nav-label {
+          display: block;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .login-screen {
+          align-items: start;
+          padding: 42px 24px;
+        }
+
+        .login-card {
+          padding: 0;
+        }
+
+        .login-card .brand {
+          margin-bottom: 56px;
+        }
+
+        .topbar {
+          padding: 0 16px;
+        }
+
+        .topbar .brand {
+          font-size: 34px;
+        }
+
+        .topbar .btn {
+          min-height: 58px;
+          padding: 0 22px;
+          font-size: 18px;
+        }
+
+        .top-actions {
+          gap: 8px;
+        }
+
+        .top-actions .btn.secondary {
+          display: none;
+        }
+
+        .content {
+          width: 100%;
+          padding: 42px 16px 128px;
+        }
+
+        .hero {
+          border-radius: 48px;
+          padding: 48px 50px;
+        }
+
+        .hero h1 {
+          font-size: 52px;
+        }
+
+        .hero p {
+          font-size: 27px;
+          line-height: 1.42;
+        }
+
+        .hero-actions {
+          display: grid;
+        }
+
+        .hero-actions .btn {
+          min-height: 86px;
+          font-size: 29px;
+        }
+
+        .hero-actions .btn.secondary {
+          width: max-content;
+          min-width: 272px;
+        }
+
+        .metric-card {
+          padding: 34px 38px;
+        }
+
+        .metric-card .top {
+          font-size: 23px;
+        }
+
+        .metric-value {
+          font-size: 58px;
+        }
+
+        .section-head {
+          align-items: start;
+        }
+
+        .reservation-grid,
+        .classes-grid {
+          gap: 30px;
+        }
+
+        .reservation-card,
+        .class-card,
+        .plan-card {
+          padding: 36px;
+        }
+
+        .filters {
+          display: grid;
+          grid-template-columns: 1fr;
+          border-radius: 32px;
+          padding: 34px 50px;
+        }
+
+        .filter-group {
+          justify-content: space-between;
+        }
+
+        .filter-group label {
+          font-size: 22px;
+        }
+
+        .filter-group select {
+          min-width: 190px;
+          min-height: 50px;
+          font-size: 20px;
+        }
+
+        .date-pill {
+          min-width: 120px;
+          padding: 24px 18px;
+        }
+
+        .class-card h3,
+        .reservation-card h3 {
+          font-size: 36px;
+        }
+
+        .class-card p,
+        .meta-row {
+          font-size: 23px;
+        }
+
+        .mini-row {
+          grid-template-columns: 1fr;
+        }
+
+        .mini {
+          font-size: 20px;
+        }
+
+        .plan-hero {
+          grid-template-columns: 1fr;
+          border-radius: 34px;
+        }
+
+        .plan-remaining {
+          text-align: left;
+        }
+
+        th,
+        td {
+          min-width: 180px;
+        }
+
+        .history-card {
+          overflow-x: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="login-screen" id="loginScreen">
+      <div class="login-card">
+        <div class="brand"><span class="brand-mark"></span><span>Namastely</span></div>
+        <h1>Bienvenida de vuelta</h1>
+        <p>Ingresa para reservar tu próxima clase.</p>
+
+        <form class="form" id="loginForm">
+          <div class="field">
+            <label for="email">Correo</label>
+            <input id="email" type="email" value="mariana@namastely.co" autocomplete="email" />
+          </div>
+          <div class="field">
+            <div class="field-row">
+              <label for="password">Contraseña</label>
+              <a href="#">¿Olvidaste?</a>
+            </div>
+            <input id="password" type="password" value="namastely" autocomplete="current-password" />
+          </div>
+          <div class="field">
+            <label for="role">Tipo de usuario</label>
+            <select id="role">
+              <option value="student">Alumna</option>
+              <option value="teacher">Profesor</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+          <label class="check-row">
+            <input type="checkbox" checked />
+            Recordarme
+          </label>
+          <button class="btn" type="submit">Ingresar <span>→</span></button>
+          <div class="login-note">¿Primera vez? <button type="button" data-page-jump="plan">Conoce los planes</button></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="role-placeholder hidden" id="rolePlaceholder">
+      <div class="card">
+        <div class="brand" style="justify-content: center"><span class="brand-mark"></span><span>Namastely</span></div>
+        <h1 id="roleTitle" style="margin-top: 24px">Panel en preparación</h1>
+        <p class="subtitle" id="roleText">Por ahora estamos implementando primero la experiencia de alumnas.</p>
+        <button class="btn" id="backToLogin" style="margin-top: 28px">Volver al login</button>
+      </div>
+    </section>
+
+    <section class="app hidden" id="studentApp">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark"></span><span>Namastely</span></div>
+        <nav class="nav" aria-label="Navegación de alumna">
+          <button class="nav-btn active" data-page="home"><span class="nav-icon">⌂</span><span class="nav-label">Inicio</span></button>
+          <button class="nav-btn" data-page="book"><span class="nav-icon">□</span><span class="nav-label">Reservar</span></button>
+          <button class="nav-btn" data-page="plan"><span class="nav-icon">✧</span><span class="nav-label">Mi plan</span></button>
+          <button class="nav-btn" data-page="history"><span class="nav-icon">▦</span><span class="nav-label">Historial</span></button>
+        </nav>
+        <div class="sidebar-plan">
+          <small>Plan 8</small>
+          <strong><span data-remaining>5</span> clases restantes</strong>
+          <div class="progress-track" style="margin-top: 18px"><div class="progress-fill" data-progress style="width: 38%"></div></div>
+        </div>
+        <button class="logout" id="logoutDesktop">↪ Cerrar sesión</button>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="brand"><span class="brand-mark"></span><span>Namastely</span></div>
+          <p class="hello">Hola de nuevo,<strong>Mariana 🌸</strong></p>
+          <div class="top-actions">
+            <button class="btn" data-page-jump="home" data-scroll-reservations>Ver mis reservas</button>
+            <button class="btn secondary" id="logoutTop">Cerrar sesión</button>
+          </div>
+        </header>
+
+        <div class="content">
+          <section class="page active" id="home">
+            <div class="hero">
+              <p class="eyebrow">Hoy</p>
+              <h1>Buenos días, Mariana.</h1>
+              <p>Tienes <span data-booking-count>5</span> clases reservadas. Respira profundo, vamos paso a paso.</p>
+              <div class="hero-actions">
+                <button class="btn" data-page-jump="book">Reservar nueva clase <span>→</span></button>
+                <button class="btn secondary" data-page-jump="plan">Ver mi plan</button>
+              </div>
+            </div>
+
+            <div class="metrics">
+              <article class="card metric-card">
+                <div class="top"><span class="bubble">✧</span>Clases restantes</div>
+                <div class="metric-value" data-remaining>5</div>
+                <p class="metric-note">de 8 en tu plan</p>
+              </article>
+              <article class="card metric-card">
+                <div class="top"><span class="bubble">↻</span>Racha mensual</div>
+                <div class="metric-value">3 clases</div>
+                <p class="metric-note">Sigue así</p>
+              </article>
+              <article class="card metric-card">
+                <div class="top"><span class="bubble">↗</span>Progreso del plan</div>
+                <div class="metric-value"><span data-progress-label>38</span>%</div>
+                <div class="progress-track" style="margin-top: 16px"><div class="progress-fill" data-progress style="width: 38%"></div></div>
+              </article>
+            </div>
+
+            <div class="section-head" id="reservationsAnchor">
+              <div>
+                <p class="eyebrow">Tus reservas</p>
+                <h2>Tus próximas clases</h2>
+              </div>
+              <button class="inline-link" data-page-jump="book">Reservar otra →</button>
+            </div>
+            <div class="reservation-grid" id="reservationsGrid"></div>
+          </section>
+
+          <section class="page" id="book">
+            <p class="eyebrow">Reservar clase</p>
+            <h1 class="page-title">Elige tu próximo movimiento</h1>
+            <p class="subtitle">Filtra por sede, jornada o profesora. Reserva en un click.</p>
+
+            <div class="date-strip" id="dateStrip"></div>
+
+            <div class="filters">
+              <div class="filter-group">
+                <label for="siteFilter">Sede</label>
+                <select id="siteFilter">
+                  <option>Todas</option>
+                  <option>Bucaramanga</option>
+                  <option>Piedecuesta</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="shiftFilter">Jornada</label>
+                <select id="shiftFilter">
+                  <option>Todas</option>
+                  <option>Mañana</option>
+                  <option>Noche</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="typeFilter">Tipo</label>
+                <select id="typeFilter">
+                  <option>Todos</option>
+                  <option>Reset Yoga</option>
+                  <option>Balance Yoga</option>
+                  <option>Energy Yoga</option>
+                  <option>Energy Pilates</option>
+                  <option>Rotativo</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="teacherFilter">Profesora</label>
+                <select id="teacherFilter">
+                  <option>Todas</option>
+                  <option>Sofía Ramírez</option>
+                  <option>Camila Duarte</option>
+                  <option>Valentina Ortiz</option>
+                  <option>Lucía Méndez</option>
+                  <option>Daniela Ruiz</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="classes-grid" id="classesGrid"></div>
+          </section>
+
+          <section class="page" id="plan">
+            <p class="eyebrow">Mi plan</p>
+            <h1 class="page-title">Tu ritmo, tu camino</h1>
+
+            <div class="plan-hero">
+              <div>
+                <span class="badge purple">Plan activo</span>
+                <h2>Plan 8</h2>
+                <p class="subtitle" style="color: rgba(255, 255, 255, 0.72)">Vence el 2026-06-09</p>
+                <div class="progress-track" style="margin-top: 34px"><div class="progress-fill" data-progress style="width: 38%"></div></div>
+                <p style="margin-top: 12px; color: rgba(255, 255, 255, 0.66)"><span data-used>3</span> de 8 clases usadas · <span data-progress-label>38</span>%</p>
+                <div class="hero-actions">
+                  <button class="btn" data-page-jump="book">Reservar próxima clase</button>
+                  <button class="btn secondary">Renovar plan</button>
+                </div>
+              </div>
+              <div>
+                <div class="plan-remaining" data-remaining>5</div>
+                <p class="eyebrow" style="color: rgba(255, 255, 255, 0.55)">Clases restantes</p>
+              </div>
+            </div>
+
+            <div class="section-head">
+              <h2>Cambiar de plan</h2>
+            </div>
+            <div class="plan-grid" id="plansGrid"></div>
+          </section>
+
+          <section class="page" id="history">
+            <p class="eyebrow">Historial</p>
+            <h1 class="page-title">Cada práctica cuenta</h1>
+            <p class="subtitle">Tu recorrido reciente.</p>
+
+            <article class="card history-card">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Clase</th>
+                    <th>Profesora</th>
+                    <th>Sede</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="historyTable"></tbody>
+              </table>
+            </article>
+          </section>
+        </div>
+      </main>
+
+      <nav class="mobile-nav" aria-label="Navegación móvil">
+        <button class="nav-btn active" data-page="home"><span class="nav-icon">⌂</span><span class="nav-label">Inicio</span></button>
+        <button class="nav-btn" data-page="book"><span class="nav-icon">□</span><span class="nav-label">Reservar</span></button>
+        <button class="nav-btn" data-page="plan"><span class="nav-icon">✧</span><span class="nav-label">Mi plan</span></button>
+        <button class="nav-btn" data-page="history"><span class="nav-icon">▦</span><span class="nav-label">Historial</span></button>
+      </nav>
+    </section>
+
+    <div class="modal-layer" id="cancelModal">
+      <div class="modal">
+        <div class="modal-icon">△</div>
+        <h3>¿Cancelar tu reserva?</h3>
+        <p>
+          Puedes cancelar sin penalización solo con <strong>2 horas de anticipación</strong>. Si cancelas después,
+          la clase se contará como tomada y se descontará de tu plan.
+        </p>
+        <div class="modal-class" id="modalClass"></div>
+        <div class="modal-actions">
+          <button class="btn soft" id="keepReservation">Mantener reserva</button>
+          <button class="btn ghost" id="confirmCancel">Sí, cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      const planTotal = 8;
+      let usedClasses = 3;
+      let selectedDate = "2026-05-22";
+      let pendingCancelId = null;
+
+      const dates = [
+        ["VIE", "22", "may.", "2026-05-22"],
+        ["SÁB", "23", "may.", "2026-05-23"],
+        ["LUN", "25", "may.", "2026-05-25"],
+        ["MAR", "26", "may.", "2026-05-26"],
+        ["MIÉ", "27", "may.", "2026-05-27"],
+        ["JUE", "28", "may.", "2026-05-28"],
+        ["VIE", "29", "may.", "2026-05-29"],
+        ["SÁB", "30", "may.", "2026-05-30"],
+        ["LUN", "1", "jun.", "2026-06-01"],
+        ["MAR", "2", "jun.", "2026-06-02"],
+      ];
+
+      const classes = [
+        {
+          id: "reset-0630",
+          type: "Reset Yoga",
+          teacher: "Sofía Ramírez",
+          date: "2026-05-22",
+          dateLabel: "vie, 22 de may",
+          time: "06:30",
+          duration: "60min",
+          site: "Bucaramanga",
+          siteShort: "Buca",
+          shift: "Mañana",
+          capacity: 12,
+          available: 1,
+          description: "Una práctica suave para soltar tensiones y restaurar el cuerpo.",
+        },
+        {
+          id: "balance-0800",
+          type: "Balance Yoga",
+          teacher: "Camila Duarte",
+          date: "2026-05-22",
+          dateLabel: "vie, 22 de may",
+          time: "08:00",
+          duration: "60min",
+          site: "Bucaramanga",
+          siteShort: "Buca",
+          shift: "Mañana",
+          capacity: 12,
+          available: 8,
+          description: "Equilibrio entre fuerza y flexibilidad con respiración consciente.",
+        },
+        {
+          id: "energy-yoga-0930",
+          type: "Energy Yoga",
+          teacher: "Valentina Ortiz",
+          date: "2026-05-22",
+          dateLabel: "vie, 22 de may",
+          time: "09:30",
+          duration: "60min",
+          site: "Bucaramanga",
+          siteShort: "Buca",
+          shift: "Mañana",
+          capacity: 12,
+          available: 1,
+          description: "Flow dinámico para activar y energizar tu día.",
+        },
+        {
+          id: "pilates-1200",
+          type: "Energy Pilates",
+          teacher: "Lucía Méndez",
+          date: "2026-05-22",
+          dateLabel: "vie, 22 de may",
+          time: "12:00",
+          duration: "60min",
+          site: "Bucaramanga",
+          siteShort: "Buca",
+          shift: "Mañana",
+          capacity: 12,
+          available: 5,
+          description: "Centro, fuerza y control con energía sostenida.",
+        },
+        {
+          id: "rotativo-1700",
+          type: "Rotativo",
+          teacher: "Daniela Ruiz",
+          date: "2026-05-22",
+          dateLabel: "vie, 22 de may",
+          time: "17:00",
+          duration: "60min",
+          site: "Bucaramanga",
+          siteShort: "Buca",
+          shift: "Noche",
+          capacity: 12,
+          available: 4,
+          description: "Una clase sorpresa para explorar nuevas formas de movimiento.",
+        },
+        {
+          id: "reset-pied-1830",
+          type: "Reset Yoga",
+          teacher: "Sofía Ramírez",
+          date: "2026-05-22",
+          dateLabel: "vie, 22 de may",
+          time: "18:30",
+          duration: "60min",
+          site: "Piedecuesta",
+          siteShort: "Pied",
+          shift: "Noche",
+          capacity: 12,
+          available: 6,
+          description: "Cierre del día con respiración, movilidad y descanso.",
+        },
+      ];
+
+      let reservations = ["reset-0630", "balance-0800", "energy-yoga-0930", "pilates-1200", "rotativo-1700"];
+
+      const history = [
+        ["Reset Yoga", "Sofía Ramírez", "Bucaramanga", "vie, 22 de may · 06:30", "Cancelada"],
+        ["Balance Yoga", "Camila Duarte", "Bucaramanga", "vie, 22 de may · 08:00", "Asistida"],
+        ["Energy Yoga", "Valentina Ortiz", "Bucaramanga", "vie, 22 de may · 09:30", "Asistida"],
+        ["Energy Pilates", "Lucía Méndez", "Bucaramanga", "vie, 22 de may · 12:00", "Asistida"],
+        ["Rotativo", "Daniela Ruiz", "Bucaramanga", "vie, 22 de may · 17:00", "Cancelada"],
+        ["Reset Yoga", "Sofía Ramírez", "Bucaramanga", "vie, 22 de may · 18:30", "Asistida"],
+        ["Balance Yoga", "Camila Duarte", "Bucaramanga", "vie, 22 de may · 20:00", "Asistida"],
+        ["Reset Yoga", "Sofía Ramírez", "Piedecuesta", "vie, 22 de may · 06:30", "Asistida"],
+      ];
+
+      const plans = [
+        ["Plan 4", "4 clases · 30 días", false],
+        ["Plan 8", "8 clases · 30 días", true],
+        ["Plan 12", "12 clases · 30 días", false],
+        ["Plan 24", "24 clases · 30 días", false],
+        ["Tiquetera", "10 clases · 30 días", false],
+        ["Anual ilimitado", "Ilimitado · 365 días", false],
+      ];
+
+      const loginScreen = document.getElementById("loginScreen");
+      const studentApp = document.getElementById("studentApp");
+      const rolePlaceholder = document.getElementById("rolePlaceholder");
+      const toast = document.getElementById("toast");
+      const modal = document.getElementById("cancelModal");
+
+      document.getElementById("loginForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const role = document.getElementById("role").value;
+
+        loginScreen.classList.add("hidden");
+
+        if (role !== "student") {
+          document.getElementById("roleTitle").textContent =
+            role === "teacher" ? "Panel de profesor" : "Panel de administrador";
+          document.getElementById("roleText").textContent =
+            "Esta experiencia se abrirá en una página personalizada separada. Ahora estamos construyendo primero la app de alumnas.";
+          rolePlaceholder.classList.remove("hidden");
+          return;
+        }
+
+        studentApp.classList.remove("hidden");
+        showPage("home");
+        showToast("success", "Login exitoso", "Bienvenida de vuelta, Mariana.");
+      });
+
+      document.getElementById("backToLogin").addEventListener("click", resetToLogin);
+      document.getElementById("logoutDesktop").addEventListener("click", resetToLogin);
+      document.getElementById("logoutTop").addEventListener("click", resetToLogin);
+
+      document.querySelectorAll(".nav-btn[data-page], [data-page-jump]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const page = button.dataset.page || button.dataset.pageJump;
+          showPage(page);
+          if (button.hasAttribute("data-scroll-reservations")) {
+            window.setTimeout(() => document.getElementById("reservationsAnchor").scrollIntoView(), 80);
+          }
+        });
+      });
+
+      document.querySelectorAll(".filters select").forEach((select) => {
+        select.addEventListener("change", renderClasses);
+      });
+
+      document.getElementById("dateStrip").addEventListener("click", (event) => {
+        const button = event.target.closest(".date-pill");
+        if (!button) return;
+        selectedDate = button.dataset.date;
+        renderDates();
+        renderClasses();
+      });
+
+      document.getElementById("keepReservation").addEventListener("click", closeModal);
+      document.getElementById("confirmCancel").addEventListener("click", () => {
+        if (!pendingCancelId) return;
+        reservations = reservations.filter((id) => id !== pendingCancelId);
+        pendingCancelId = null;
+        closeModal();
+        updateAll();
+        showToast("error", "Reserva cancelada fuera de tiempo", "La clase se descontará de tu plan por cancelar con menos de 2 horas.");
+      });
+
+      function resetToLogin() {
+        studentApp.classList.add("hidden");
+        rolePlaceholder.classList.add("hidden");
+        loginScreen.classList.remove("hidden");
+      }
+
+      function showPage(pageId) {
+        document.querySelectorAll(".page").forEach((page) => page.classList.remove("active"));
+        document.getElementById(pageId).classList.add("active");
+        document.querySelectorAll(".nav-btn[data-page]").forEach((button) => {
+          button.classList.toggle("active", button.dataset.page === pageId);
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function renderDates() {
+        document.getElementById("dateStrip").innerHTML = dates
+          .map(
+            ([day, number, month, date]) => `
+              <button class="date-pill ${date === selectedDate ? "active" : ""}" data-date="${date}">
+                <span>${day}</span>
+                <strong>${number}</strong>
+                <small>${month}</small>
+              </button>
+            `,
+          )
+          .join("");
+      }
+
+      function renderReservations() {
+        const reservedClasses = classes.filter((item) => reservations.includes(item.id));
+        const grid = document.getElementById("reservationsGrid");
+
+        if (reservedClasses.length === 0) {
+          grid.innerHTML = `<article class="card empty">No tienes reservas activas. Elige tu próxima clase cuando quieras.</article>`;
+          return;
+        }
+
+        grid.innerHTML = reservedClasses
+          .map(
+            (item) => `
+              <article class="card reservation-card">
+                <div class="corner"></div>
+                <div style="display:flex;justify-content:space-between;gap:12px;align-items:start">
+                  <div>
+                    <p class="class-type">${item.type}</p>
+                    <h3>${item.teacher}</h3>
+                  </div>
+                  <span class="badge">Reservada</span>
+                </div>
+                <div class="meta-row">
+                  <span>▣ ${item.dateLabel}</span>
+                  <span>◷ ${item.time} · ${item.duration}</span>
+                  <span>⌖ ${item.site}</span>
+                </div>
+                <div class="card-actions">
+                  <button class="btn soft" onclick="changeSchedule('${item.id}')">Cambiar horario</button>
+                  <button class="danger-link" onclick="openCancel('${item.id}')">Cancelar reserva</button>
+                </div>
+              </article>
+            `,
+          )
+          .join("");
+      }
+
+      function renderClasses() {
+        const site = document.getElementById("siteFilter").value;
+        const shift = document.getElementById("shiftFilter").value;
+        const type = document.getElementById("typeFilter").value;
+        const teacher = document.getElementById("teacherFilter").value;
+
+        const visible = classes.filter((item) => {
+          return (
+            item.date === selectedDate &&
+            (site === "Todas" || item.site === site) &&
+            (shift === "Todas" || item.shift === shift) &&
+            (type === "Todos" || item.type === type) &&
+            (teacher === "Todas" || item.teacher === teacher)
+          );
+        });
+
+        const grid = document.getElementById("classesGrid");
+
+        if (visible.length === 0) {
+          grid.innerHTML = `<article class="card empty">No hay clases disponibles con esos filtros.</article>`;
+          return;
+        }
+
+        grid.innerHTML = visible
+          .map((item) => {
+            const isReserved = reservations.includes(item.id);
+            const occupied = Math.round(((item.capacity - item.available) / item.capacity) * 100);
+            return `
+              <article class="card class-card">
+                <div class="corner"></div>
+                <div style="display:flex;justify-content:space-between;align-items:start;gap:12px">
+                  <div>
+                    <p class="class-type">${item.type}</p>
+                    <h3>${item.teacher}</h3>
+                  </div>
+                  <span class="badge purple">${isReserved ? "Reservada" : `${item.available} cupos`}</span>
+                </div>
+                <p>${item.description}</p>
+                <div class="mini-row">
+                  <span class="mini">◷ ${item.time}</span>
+                  <span class="mini">⌖ ${item.siteShort}</span>
+                  <span class="mini">♙ ${item.capacity}</span>
+                </div>
+                <div class="occupancy">
+                  <div class="progress-track"><div class="progress-fill" style="width:${occupied}%"></div></div>
+                  <p class="metric-note" style="margin-top:8px">${occupied}% ocupada</p>
+                </div>
+                <button class="btn" style="width:100%;margin-top:22px" ${isReserved ? "disabled" : ""} onclick="reserveClass('${item.id}')">
+                  ${isReserved ? "Reservada" : "Reservar"}
+                </button>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      function renderPlans() {
+        document.getElementById("plansGrid").innerHTML = plans
+          .map(
+            ([name, detail, featured]) => `
+              <article class="card plan-card ${featured ? "featured" : ""}">
+                <span style="font-size:30px">✧</span>
+                ${featured ? `<span class="badge purple" style="float:right">Popular</span>` : ""}
+                <h3>${name}</h3>
+                <p class="subtitle" style="${featured ? "color:rgba(255,255,255,.75)" : ""}">${detail}</p>
+                <ul>
+                  <li>✓ Reserva en 1 click</li>
+                  <li>✓ 2 sedes incluidas</li>
+                </ul>
+                <button class="btn ${featured ? "secondary" : "soft"}" style="width:100%" onclick="showToast('success','Solicitud recibida','Te contactaremos para cambiar tu plan.')">Elegir</button>
+              </article>
+            `,
+          )
+          .join("");
+      }
+
+      function renderHistory() {
+        document.getElementById("historyTable").innerHTML = history
+          .map(
+            ([className, teacher, site, date, status]) => `
+              <tr>
+                <td><strong>${className}</strong></td>
+                <td>${teacher}</td>
+                <td>${site}</td>
+                <td>${date}</td>
+                <td><span class="status ${status === "Asistida" ? "ok" : "bad"}">${status}</span></td>
+              </tr>
+            `,
+          )
+          .join("");
+      }
+
+      function updateCounters() {
+        const remaining = Math.max(planTotal - usedClasses, 0);
+        const used = planTotal - remaining;
+        const progress = Math.round((used / planTotal) * 100);
+
+        document.querySelectorAll("[data-remaining]").forEach((item) => (item.textContent = remaining));
+        document.querySelectorAll("[data-used]").forEach((item) => (item.textContent = used));
+        document.querySelectorAll("[data-progress-label]").forEach((item) => (item.textContent = progress));
+        document.querySelectorAll("[data-progress]").forEach((item) => (item.style.width = `${progress}%`));
+        document.querySelectorAll("[data-booking-count]").forEach((item) => (item.textContent = reservations.length));
+      }
+
+      function updateAll() {
+        renderReservations();
+        renderClasses();
+        updateCounters();
+      }
+
+      function reserveClass(id) {
+        if (reservations.includes(id)) return;
+        reservations.push(id);
+        usedClasses += 1;
+        const item = classes.find((classItem) => classItem.id === id);
+        if (item) item.available = Math.max(item.available - 1, 0);
+        updateAll();
+        showToast("success", "¡Reserva confirmada! 🌸", "Te esperamos. Llega 10 minutos antes.");
+      }
+
+      function changeSchedule(id) {
+        pendingCancelId = id;
+        showPage("book");
+        showToast("success", "Elige un nuevo horario", "Reserva otra clase y luego cancela la anterior si lo necesitas.");
+      }
+
+      function openCancel(id) {
+        pendingCancelId = id;
+        const item = classes.find((classItem) => classItem.id === id);
+        document.getElementById("modalClass").innerHTML = item
+          ? `<h3 style="font-size:24px">${item.type}</h3><p>${item.dateLabel} · ${item.time} · ${item.site}</p>`
+          : "";
+        modal.classList.add("show");
+      }
+
+      function closeModal() {
+        modal.classList.remove("show");
+      }
+
+      function showToast(type, title, message) {
+        toast.className = `toast show ${type === "error" ? "error" : ""}`;
+        toast.innerHTML = `<strong>${title}</strong><p>${message}</p>`;
+        window.clearTimeout(window.toastTimer);
+        window.toastTimer = window.setTimeout(() => toast.classList.remove("show"), 3600);
+      }
+
+      renderDates();
+      renderReservations();
+      renderClasses();
+      renderPlans();
+      renderHistory();
+      updateCounters();
+    </script>
+  </body>
+</html>

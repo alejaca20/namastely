@@ -1,0 +1,9 @@
+[build]
+  command = "echo 'Static Namastely deploy - no build needed'"
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
