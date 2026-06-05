@@ -1640,6 +1640,11 @@
           return;
         }
 
+        if (authMode === "signup" && !result.data?.user) {
+          setLoginStatus("Supabase no devolvió un usuario nuevo. Revisa que el registro por email esté habilitado.");
+          return;
+        }
+
         if (authMode === "signup") {
           await supabaseClient.auth.signOut();
           signupSuccessModal.classList.add("show");
