@@ -910,6 +910,11 @@
         font-size: 30px;
       }
 
+      .modal-icon.success {
+        background: #ecfff3;
+        color: #00862e;
+      }
+
       .modal h3 {
         font-size: 30px;
       }
@@ -1512,6 +1517,20 @@
       </div>
     </div>
 
+    <div class="modal-layer" id="signupSuccessModal">
+      <div class="modal">
+        <div class="modal-icon success">✓</div>
+        <h3>Tu cuenta se creó satisfactoriamente</h3>
+        <p>
+          Te llegará un correo para validar tu información. Después de confirmar tu correo,
+          vuelve a Namastely e inicia sesión con tus datos.
+        </p>
+        <div class="modal-actions">
+          <button class="btn" id="signupSuccessClose">Entendido</button>
+        </div>
+      </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
@@ -1560,6 +1579,7 @@
       const rolePlaceholder = document.getElementById("rolePlaceholder");
       const toast = document.getElementById("toast");
       const modal = document.getElementById("cancelModal");
+      const signupSuccessModal = document.getElementById("signupSuccessModal");
 
       document.getElementById("loginModeButton").addEventListener("click", () => setAuthMode("login"));
       document.getElementById("signupModeButton").addEventListener("click", () => setAuthMode("signup"));
@@ -1605,18 +1625,27 @@
             ? await supabaseClient.auth.signUp({
                 email,
                 password,
-                options: { data: { full_name: fullName } },
+                options: {
+                  data: { full_name: fullName },
+                  emailRedirectTo: `${window.location.origin}${window.location.pathname}`,
+                },
               })
             : await supabaseClient.auth.signInWithPassword({ email, password });
 
         if (result.error) {
-          setLoginStatus(result.error.message);
+          const message = result.error.message.toLowerCase().includes("email not confirmed")
+            ? "Tu correo todavía no está confirmado. Revisa tu email y valida tu cuenta antes de ingresar."
+            : result.error.message;
+          setLoginStatus(message);
           return;
         }
 
-        if (authMode === "signup" && !result.data.session) {
-          setLoginStatus("Cuenta creada. Revisa tu correo para confirmar el acceso.");
-          showToast("success", "Cuenta creada", "Revisa tu correo para confirmar tu cuenta.");
+        if (authMode === "signup") {
+          await supabaseClient.auth.signOut();
+          signupSuccessModal.classList.add("show");
+          setAuthMode("login");
+          document.getElementById("password").value = "";
+          setLoginStatus("Revisa tu correo, confirma la cuenta y luego inicia sesión.");
           return;
         }
 
@@ -1654,6 +1683,9 @@
       });
 
       document.getElementById("keepReservation").addEventListener("click", closeModal);
+      document.getElementById("signupSuccessClose").addEventListener("click", () => {
+        signupSuccessModal.classList.remove("show");
+      });
       document.getElementById("confirmCancel").addEventListener("click", () => {
         if (!pendingCancelId) return;
         cancelReservation(pendingCancelId);
