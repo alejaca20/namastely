@@ -1797,7 +1797,7 @@
       async function loadStudentData() {
         const { data: student, error: studentError } = await supabaseClient
           .from("students")
-          .select("id,plan_started_on,plans(id,name,monthly_classes)")
+          .select("id,plan_id,plan_started_on,plans(id,name,monthly_classes)")
           .eq("profile_id", currentProfile.id)
           .single();
 
@@ -1806,7 +1806,7 @@
         }
 
         currentStudent = student;
-        currentPlan = student.plans || { name: "Plan", monthly_classes: 0 };
+        currentPlan = student.plans || { name: "Sin plan asignado", monthly_classes: 0 };
         planTotal = Number(currentPlan.monthly_classes || 0);
 
         const [classesResult, bookingsResult, plansResult] = await Promise.all([
@@ -2138,6 +2138,11 @@
 
         if (!currentStudent) {
           showToast("error", "No se pudo reservar", "No encontramos tu perfil de alumna.");
+          return;
+        }
+
+        if (!currentStudent.plan_id && currentPlan.name === "Sin plan asignado") {
+          showToast("error", "Plan pendiente", "Tu cuenta todavía no tiene un plan asignado. Escríbele a la academia.");
           return;
         }
 
